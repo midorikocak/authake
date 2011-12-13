@@ -241,7 +241,7 @@ $email->replyTo(Configure::read('Authake.systemReplyTo'));
         }
       }
       if($code != null){
-        $this->data['User']['passwordchangecode'] = $code;
+        $this->request->data['User']['passwordchangecode'] = $code;
       }
     }
     

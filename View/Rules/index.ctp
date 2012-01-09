@@ -3,7 +3,7 @@
 <div class="rules index">
 <?php if (!$tableonly) { ?>
 
-<h2><?php __('Rules');?></h2>
+<h2><?php echo __('Rules');?></h2>
 <div class="actions">
     <ul>
         <li class="icon add"><?php echo $this->Html->link(__('New Rule'), array('action'=>'add')); ?></li>
@@ -12,12 +12,12 @@
 <?php } ?>
 <table class="listing" cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php __('Description');?></th>
-	<th><?php __('Group');?></th>
+	<th><?php echo __('Description');?></th>
+	<th><?php echo __('Group');?></th>
     <th>&nbsp;</th>
-	<th><?php __('Action');?></th>
-	<th class="actions"><?php __('Actions');?></th>
-    <th><?php __('Order');?></th>
+	<th><?php echo __('Action');?></th>
+	<th class="actions"><?php echo __('Actions');?></th>
+    <th><?php echo __('Order');?></th>
 </tr>
 <?php
 $i = 0;

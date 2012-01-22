@@ -21,10 +21,10 @@
 
 
 class RulesController extends AuthakeAppController {
-    var $name  = 'Rules';
+   
     var $uses = array('Authake.Rule');
     //var $scaffold;
-    var $layout = 'authake';
+   // var $layout = 'authake';
 
     function index($tableonly = false) {
         $this->Rule->recursive = 0;

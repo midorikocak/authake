@@ -1,3 +1,10 @@
+UPDATE: 22 jan 2012 
+
+Upgrading to Cakephp 2.1
+fixed: getcontrollers
+views
+
+
 UPDATE: Best run with after CakePHP 2.0.3.
 
 Authake is finally arrived to CakePHP 2.0 and is (another) solution to manage users and groups and their rights in a CakePHP platform, as well as their registration, email confirmation and password changing requests. It’s composed by a component, a plugin, and a helper.

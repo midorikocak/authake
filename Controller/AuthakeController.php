@@ -21,9 +21,9 @@
 
 
 class AuthakeController extends AuthakeAppController {
-    var $name  = 'Authake';
+
     var $uses = array();    // needed as we don't have any model
-    var $layout = 'authake';
+//    var $layout = 'authake';
 
     function index() {}
 }

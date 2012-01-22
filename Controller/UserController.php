@@ -21,10 +21,9 @@
 
 App::uses('CakeEmail', 'Network/Email');
 class UserController extends AuthakeAppController {
-  var $name     = 'User';
-  var $uses     = array('Authake.User', 'Authake.Rule', 'Authake.Group');
+   var $uses     = array('Authake.User', 'Authake.Rule', 'Authake.Group');
   var $components = array('Email');
-  var $layout = 'authake';
+  //var $layout = 'authake';
 
   //var $scaffold;
 

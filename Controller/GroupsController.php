@@ -22,14 +22,14 @@
 
 class GroupsController extends AuthakeAppController {
 
-	var $name = 'Groups';
+	
 	var $paginate = array(
             'limit' => 100000,
             'order' => array(
                 'Group.id' => 'asc'
             )
         );
-	var $layout = 'authake';
+	//var $layout = 'authake';
     
     var $uses = array('Authake.Group', 'Authake.Rule');
 

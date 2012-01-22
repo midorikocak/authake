@@ -14,7 +14,7 @@
 <?php } ?>
 		<li class="icon group_edit"><?php echo $this->Html->link(__('Edit group'), array('action'=>'edit', $group['Group']['id'])); ?></li>
 <?php if (empty($actions)) { ?>
-        <li class="icon lock"><?php echo $this->Html->link(__('View allowed & denied actions'), array('action'=>'view', "{$group['Group']['id']}/actions")); ?></li>
+        <li class="icon lock"><?php echo $this->Html->link(__('View allowed & denied actions'), array('action'=>'view', $group['Group']['id'] ,'actions')); ?></li>
         <li class="icon cross"><?php echo $this->Html->link(__('Delete group'), array('action'=>'delete', $group['Group']['id']), null, sprintf(__('Are you sure you want to delete the group %s?'), $group['Group']['id'])); ?></li>
 <?php } ?>  
 	</ul>

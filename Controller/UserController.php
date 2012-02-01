@@ -346,7 +346,7 @@ function lost_password() {
 				$this->Email->from = Configure::read('Authake.systemEmail');
 				$this->Email->sendAs = 'html';
 				$this->Email->charset = 'utf-8';
-				$this->Email->template = '`Authake.lost_password';
+				$this->Email->template = 'Authake.lost_password';
 				//Set the code into template
 				$this->set('code', $user['User']['passwordchangecode']);
 				$this->set('service', Configure::read('Authake.service'));

@@ -7,7 +7,7 @@
 <div class="groups form">
 <?php echo $this->Form->create('Group');?>
 	<fieldset>
- 	<legend><?php __('Modify group'); echo " ".$this->request->data['Group']['name']; ?></legend>
+ 	<legend><?php echo __('Modify group'); echo " ".$this->request->data['Group']['name']; ?></legend>
  	<?php
         echo $this->Form->input('id');   
 		echo $this->Form->input('name', array('label'=>__('Name')));

@@ -55,8 +55,8 @@
     <?php if (!empty($group['User'])):?>
     <table class="listing" cellpadding = "0" cellspacing = "0">
     <tr>
-        <th><?php __('Login'); ?></th>
-        <th><?php __('Email'); ?></th>
+        <th><?php echo __('Login'); ?></th>
+        <th><?php echo __('Email'); ?></th>
         <th class="actions"><?php __('Actions');?></th>
     </tr>
     <?php

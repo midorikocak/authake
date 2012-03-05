@@ -59,7 +59,7 @@ class AuthakeComponent extends Component {
          * is used in case when The login page is the home page. If this is not set to different location, then it's going into recursion.
          */
         if (Configure::read('Authake.loggedAction') == null) {
-            Configure::write('Authake.loggedAction', array('plugin' => false, 'controller' => 'entries', 'action' => 'index', 'admin' => 0));
+            Configure::write('Authake.loggedAction', Configure::read('Authake.baseUrl'));
         }
         /**
          * Session timeout in seconds, if managed by Authake (or null to disable)

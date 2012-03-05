@@ -5,7 +5,7 @@
     </ul>
 </div>
 <div class="index">
-<h2><?php __('Authake administration page');?></h2>
+<h2><?php echo __('Authake administration page');?></h2>
 
 <div class="actions">
     <ul>

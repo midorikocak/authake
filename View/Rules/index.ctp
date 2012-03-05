@@ -58,11 +58,11 @@ foreach ($rules as $k => $rule):
             <?php if ($rule['Rule']['id'] != 1) { ?>      
             <?php echo $this->Htmlbis->iconlink('information', __('View'), array('action'=>'view', $rule['Rule']['id'])); ?>
             <?php echo $this->Htmlbis->iconlink('pencil', __('Edit'), array('action'=>'edit', $rule['Rule']['id'])); ?>
-			<?php echo $this->Htmlbis->iconlink('cross', __('Delete'), array('action'=>'delete', $rule['Rule']['id']), null, sprintf(__('Are you sure you want to delete the rule "%s"?'), $rule['Rule']['name'])); ?>
+			<?php echo $this->Htmlbis->iconlink('cross', __('Delete'), array('action'=>'delete', $rule['Rule']['id']), null, sprintf(__('Are you sure you want to delete the rule \'%s\'?'), $rule['Rule']['name'])); ?>
             <?php
 
             if ($up) {
-                echo $this->Htmlbis->iconlink('arrow_up', __('Move up'), array('action'=>'up', $rule['Rule']['id'].'/'.$up));
+                echo $this->Htmlbis->iconlink('arrow_up', __('Move up'), array('action'=>'up', $rule['Rule']['id'], $up));
             } else {
                 echo $this->Htmlbis->iconlink('empty', '', array('action'=>''));
             }
@@ -70,7 +70,7 @@ foreach ($rules as $k => $rule):
               
             $down = $rules[$k+1]['Rule']['id'];
             if ($down>1) {
-                echo $this->Htmlbis->iconlink('arrow_down', __('Move down'), array('action'=>'up', $rule['Rule']['id'].'/'.$down));
+                echo $this->Htmlbis->iconlink('arrow_down', __('Move down'), array('action'=>'up', $rule['Rule']['id'], $down));
             } else {
                 echo $this->Htmlbis->iconlink('empty', '', array('action'=>''));
             }
@@ -85,13 +85,12 @@ foreach ($rules as $k => $rule):
 <?php endforeach; ?>
 </table>
 </div>
-
+</div>
 <?php if (!$tableonly) { ?>
 <div class="actions">
 	<ul>
-        <li class="icon user"><?php echo $this->Html->link(__('Manage Users'), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li class="icon group"><?php echo $this->Html->link(__('Manage Groups'), array('controller'=> 'groups', 'action'=>'index')); ?> </li>
+        <li class="icon user"><?php echo $this->Html->link(__('Manage users'), array('controller'=> 'users', 'action'=>'index')); ?> </li>
+        <li class="icon lock"><?php echo $this->Html->link(__('Manage groups'), array('controller'=> 'groups', 'action'=>'index')); ?> </li>
 	</ul>
 </div>
 <?php } ?>
-</div>

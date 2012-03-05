@@ -49,8 +49,9 @@ var $recursive = 1;
                     'message' => 'Only alphabets and numbers allowed'
                 ),
                 'minlength' => array(
-                    'rule' => array('minLength', '3'),
-                    'message' => 'Minimum length of 3 characters'
+                    'rule' => array('minLength', ( Configure::read('Authake.useEmailAsUsername') ? '0' : '3' ) ), 
+                    // set min length to 0 if we do not want usernames but only emails
+                       'message' => 'Minimum length of 3 characters'
                 ),
                 'maxlength' => array(
                     'rule' => array('maxLength', '32'),  
@@ -90,8 +91,8 @@ var $recursive = 1;
     }
     
     function checkPasswords(){
-            if(($this->data['User']['password1'] != $this->data['User']['password2'])){
-                    return false;
+              if(($this->request->data['User']['password1'] != $this->request->data['User']['password2'])){
+                   return false;
             }
             return true;
     }
@@ -99,7 +100,11 @@ var $recursive = 1;
     function getLoginData($login='', $password='')
     {
 	$hashed = md5($password);
-        $data = $this->find('first', array('conditions'=>array('login'=>$login, 'password'=>$hashed),'recursive' => 1));
+           if(Configure::read('Authake.useEmailAsUsername') == false){
+            $data = $this->find('first', array('conditions'=>array('login'=>$login, 'password'=>$hashed),'recursive' => 1));
+        } else {
+            $data = $this->find('first', array('conditions'=>array('email'=>$login, 'password'=>$hashed),'recursive' => 1));
+        }
 
         if (!empty($data)) {
 /*

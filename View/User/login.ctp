@@ -11,7 +11,7 @@
 <?php echo $this->Form->end(__('Login'))  ?>
 <?php if(Configure::read('Authake.registration') == true){?>
     <p class="lostpassword" style="margin-left: 16em;"><?php echo $this->Html->link(__("I forgot my password..."), array('action'=>'lost_password'))."<br/>"; ?></p>
-    <p class="register" style="margin-left: 16em;"><?php echo $this->Html->link(__("Register yourself"), array('action'=>'register'))."<br/>"; ?></p>
+<?php /*    <p class="register" style="margin-left: 16em;"><?php echo $this->Html->link(__("Register yourself"), array('action'=>'register'))."<br/>"; ?></p> */ ?>
 <?php };?>
 </div>
 </div>

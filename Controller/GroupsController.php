@@ -53,9 +53,9 @@ class GroupsController extends AuthakeAppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Group->create();
-			if ($this->Group->save($this->data)) {
+			if ($this->Group->save($this->request->data)) {
 				$this->Session->setFlash(__('The group has been saved'), 'success');
 				$this->redirect(array('action'=>'index'));
 			} else {
@@ -67,7 +67,7 @@ class GroupsController extends AuthakeAppController {
 	}
 
 	function edit($id = null) {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid group'), 'warning');
             $this->redirect(array('action'=>'index'));
         }
@@ -77,16 +77,16 @@ class GroupsController extends AuthakeAppController {
             $this->redirect(array('action'=>'index'));
         }
         
-		if (!empty($this->data)) {
-			if ($this->Group->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Group->save($this->request->data)) {
 				$this->Session->setFlash(__('The group has been saved'), 'success');
 			} else {
 				$this->Session->setFlash(__('The group could not be saved. Please, try again.'), 'error');
 			}
             $this->redirect(array('action'=>'index'));
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Group->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Group->read(null, $id);
 		}
 
 

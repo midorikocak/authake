@@ -52,14 +52,14 @@ class AuthakeComponent extends Component {
          * Default login action
          */
         if (Configure::read('Authake.loginAction') == null) {
-            Configure::write('Authake.loginAction', array('plugin' => 'authake', 'controller' => 'user', 'action' => 'login'));
+            Configure::write('Authake.loginAction', array('plugin' => 'authake', 'controller' => 'user', 'action' => 'login', 'admin' => 0));
         }
         /**
          * Used to redirect the users if the current user is logged out. Basically, this
          * is used in case when The login page is the home page. If this is not set to different location, then it's going into recursion.
          */
         if (Configure::read('Authake.loggedAction') == null) {
-            Configure::write('Authake.loggedAction', array('plugin' => false, 'controller' => 'entries', 'action' => 'index'));
+            Configure::write('Authake.loggedAction', Configure::read('Authake.baseUrl'));
         }
         /**
          * Session timeout in seconds, if managed by Authake (or null to disable)
@@ -71,7 +71,7 @@ class AuthakeComponent extends Component {
          * Default page when access is denied (should be allowed by ACLs...)
          */
         if (Configure::read('Authake.defaultDeniedAction') == null) {
-            Configure::write('Authake.defaultDeniedAction', array('plugin' => 'authake', 'controller' => 'user', 'action' => 'denied'));
+            Configure::write('Authake.defaultDeniedAction', array('plugin' => 'authake', 'controller' => 'user', 'action' => 'denied', 'admin' => 0));
         }
         /**
          * Reload all rules every x seconds
@@ -116,6 +116,15 @@ class AuthakeComponent extends Component {
         if (Configure::read('Authake.useDefaultLayout') == null) {
             Configure::write('Authake.useDefaultLayout', false); //could be true or false
         }
+        /**
+         * Use only email instead of user/email (a lot of sites are using this behavior, i.e.: Google,
+         * so people is already used to it)
+         * Defaults to false so it keeps on the old behavior
+         */
+         
+        if (Configure::read('Authake.useEmailAsUsername') == null) {
+            Configure::write('Authake.useEmailAsUsername', false); //could be true or false
+        }
     }
 
     function beforeFilter(&$controller) { //pr($this);
@@ -123,24 +132,13 @@ class AuthakeComponent extends Component {
         $this->startup();
 
         // get action path
-        // used when the action is called through requestAction()
-        if (!isset($controller->request['url'])) {
-            if (isset($controller->request->params['plugin'])) {
-                $url = '' . $controller->request->params['plugin'];
-            } else {
-                $url = '';
-            }
-            $controller->request['url'] = $url . '/' . $controller->request->params['controller'] . '/' . $controller->request->params['action'];
-        }
-        $path = $controller->request['url'];
-        if ($path != '/') {
-            $path = '/' . $path;
-        }
+
+        $path = $controller->request->params;
+
         $loginAction = Configure::read('Authake.loginAction');
-        if (is_array(Configure::read('Authake.loginAction'))) {
-            $loginAction = "/" . implode("/", Configure::read('Authake.loginAction'));
-        }
-        if ($path != $loginAction) {
+        
+       if (Router::url($controller->request->params + array("base" => false)) != Router::url($loginAction + array("base" => false)) ) {
+        
             $this->setPreviousUrl(null);
         }
 
@@ -167,8 +165,9 @@ class AuthakeComponent extends Component {
                 $controller->redirect($fw);
             } else { // if denied & not loggued, propose to log in
                 $this->setPreviousUrl($path);
-                $this->Session->setFlash(sprintf(__('You have to log in to access %s'), $path), 'warning');
-                $controller->redirect($loginAction);
+             $strpath = Router::url($path + array("base" => false));
+            $this->Session->setFlash(sprintf(__('You have to log in to access %s'), $strpath), 'warning');
+       $controller->redirect($loginAction);
             }
             $this->_flashmessage = '';
         }
@@ -220,7 +219,9 @@ class AuthakeComponent extends Component {
     }
 
     function login($user) {
+        $previousUrl = $this->Session->read("Authake.previousUrl");
         $this->Session->write('Authake', $user);
+        $this->Session->write("Authake.previousUrl", $previousUrl);
         $this->setTimestamp();
     }
 
@@ -251,6 +252,7 @@ class AuthakeComponent extends Component {
 
     // Function to check the access for the controller / action
     function isAllowed($url = "", $group_ids = null) { // $checkStr: "/name/action/" $group_ids: check again thess groups
+          if (is_array($url)) { $url = $this->cleanUrl($url) ;}
         $allow = false;
         $rules = $this->getRules($group_ids);
         foreach ($rules as $data) {
@@ -329,6 +331,12 @@ class AuthakeComponent extends Component {
         }
         return $allow;
     }
+
+    private function cleanUrl($url) {
+        $clurl = array_intersect_key($url, array("controller" => '', "action" => '', "prefix" => '', "admin" => ''));
+        
+        return Router::url($clurl + array("base" => false));
+   }
 
 }
 

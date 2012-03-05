@@ -57,19 +57,19 @@ class UsersController extends AuthakeAppController {
     }
 
     function add() {
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             
             // only an admin can make an admin
-            if (in_array(1, $this->data['Group']['Group']) and !in_array(1, $this->Authake->getGroupIds())) {
+            if (in_array(1, $this->request->data['Group']['Group']) and !in_array(1, $this->Authake->getGroupIds())) {
                 $this->Session->setFlash(__('You cannot add a user in administrators group'), 'warning');
                 $this->redirect(array('action'=>'index'));
             }
             
-            $p = $this->data['User']['password'];
-            $this->data['User']['password'] = $this->__makePassword($p, $p);
+            $p = $this->request->data['User']['password'];
+            $this->request->data['User']['password'] = $this->__makePassword($p, $p);
             
             $this->User->create();
-            if ($this->User->save($this->data)) {
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The User has been saved'), 'success');
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -77,13 +77,13 @@ class UsersController extends AuthakeAppController {
             }
         }
         
-        $this->data['User']['password'] = '';        
+        $this->request->data['User']['password'] = '';        
         $groups = $this->User->Group->find('list');
         $this->set(compact('groups'));
     }
 
     function edit($id = null) {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid User'));
             $this->redirect(array('action'=>'index'));
         }
@@ -98,7 +98,7 @@ class UsersController extends AuthakeAppController {
             $this->redirect(array('action'=>'index'));
         }
         
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             // only Admin (id 1) can modify its profile (for security reasons)
             if ($id == 1 && $this->Authake->getUserId() != 1) {
                 $this->Session->setFlash(__('Only the admin can change its profile!'), 'warning');
@@ -106,13 +106,13 @@ class UsersController extends AuthakeAppController {
             }
             
             // only an admin can make an admin
-            if($this->data['Group']['Group'] == ''){
+            if($this->request->data['Group']['Group'] == ''){
               $this->request->data['Group']['Group'] = array();
             }
             
             if (
-                isset($this->data['Group']['Group']) and
-                in_array(1, $this->data['Group']['Group']) and
+                isset($this->request->data['Group']['Group']) and
+                in_array(1, $this->request->data['Group']['Group']) and
                 !in_array(1, $this->Authake->getGroupIds())
                 ) {
                 $this->Session->setFlash(__('You cannot add a user in administrators group'), 'warning');
@@ -120,18 +120,18 @@ class UsersController extends AuthakeAppController {
             }
 
             // check if pwd changed
-            if ($p = $this->data['User']['password'])
+            if ($p = $this->request->data['User']['password'])
                 $this->request->data['User']['password'] = $this->__makePassword($p, $p);
             else
                 unset($this->request->data['User']['password']);
 
-            if (empty($this->data['Group']))
-                $this->data['Group']['Group'] = array();      // delete user-group relation if selection empty
+            if (empty($this->request->data['Group']))
+                $this->request->data['Group']['Group'] = array();      // delete user-group relation if selection empty
 
             unset($this->request->data['User']['login']);    // never change the login
 
             // save user
-            if ($this->User->save($this->data)) {
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The User has been saved'), 'success');
                 $this->redirect(array('action'=>'index'));
             } else {

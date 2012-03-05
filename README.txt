@@ -1,3 +1,10 @@
+UPDATE: 31 Jan 2012 
+
+Chages added made by Lonardo Pedretti
+fixed: this->rquest->data issues
+login using email
+views
+
 UPDATE: 22 jan 2012 
 
 Upgrading to Cakephp 2.1

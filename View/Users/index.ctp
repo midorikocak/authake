@@ -1,8 +1,8 @@
-`<div id="authake">
+<div id="authake">
 <?php if (!$tableonly) { echo $this->element('gotoadminpage'); } ?>
 <div class="users index">
 <?php if (!$tableonly) { ?>
-<h2><?php __('Users');?></h2>
+<h2><?php echo __('Users');?></h2>
 <div class="actions">
     <ul>
         <li class="icon add"><?php echo $this->Html->link(__('New User'), array('action'=>'add')); ?></li>
@@ -27,7 +27,7 @@ echo $this->Paginator->counter(array(
 	<th><?php echo $this->Paginator->sort('Change Pwd','passwordchangecode');?></th>
     <th><?php echo $this->Paginator->sort('created');?></th>
     <th><?php echo $this->Paginator->sort(__('Disabled'), 'disable');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions"><?php echo __('Actions');?></th>
 </tr>
 <tr class="table-filter">
     <td width="3%"><?php echo $this->Form->input('User.id', array('div'=>false, 'type'=>'text', 'label'=>false));?></td>
@@ -112,18 +112,10 @@ foreach ($users as $user):
 </table>
 </fieldset>
 <?php echo $this->Form->end();?>
-</div>
 <div class="paging">
 	<?php echo $this->Paginator->prev('<< '.__('previous'), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $this->Paginator->numbers();?>
 	<?php echo $this->Paginator->next(__('next').' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<?php if (!$tableonly) { ?>
-<div class="actions">
-	<ul>
-		<li class="icon group"><?php echo $this->Html->link(__('Manage groups'), array('controller'=>'groups', 'action'=>'index')); ?> </li>
-        <li class="icon lock"><?php echo $this->Html->link(__('Manage rules'), array('controller'=> 'rules', 'action'=>'index')); ?> </li>
-	</ul>
 </div>
-<?php } ?>
 </div>

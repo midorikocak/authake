@@ -7,8 +7,8 @@
     <div class="users form">
     <?php echo $this->Form->create('User');?>
 	    <fieldset>
-		    <legend><?php __('Modify user'); echo " ".$this->data['User']['login']; ?></legend>
-	    <?php
+	    <legend><?php __('Modify user'); echo " ".$this->request->data['User']['login']; ?></legend>
+ 	  	    <?php
 		    echo $this->Form->input('id');
 		    echo $this->Form->input('Group', array('label'=>__('In groups<br/>Press \'Control\' for multi-selection'), 'style'=>'width: 15em;'));
 		    echo $this->Form->input('email', array('label'=>__('Email'), 'size'=>'40'));

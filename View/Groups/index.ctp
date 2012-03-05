@@ -3,7 +3,7 @@
 <div class="groups index">
 <?php if (!$tableonly) { ?>
 
-<h2><?php __('Groups');?></h2>
+<h2><?php echo __('Groups');?></h2>
 <div class="actions">
     <ul>
         <li class="icon add"><?php echo $this->Html->link(__('New group'), array('action'=>'add')); ?></li>
@@ -19,7 +19,7 @@ echo $this->Paginator->counter(array(
 <table class="listing" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $this->Paginator->sort('name');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions"><?php echo __('Actions');?></th>
 </tr>
 <?php
 $i = 0;
@@ -58,13 +58,4 @@ foreach ($groups as $group):
     </tr>
 </table>
 </div>
-
-<?php if (!$tableonly) { ?>
-<div class="actions">
-	<ul>
-        <li class="icon user"><?php echo $this->Html->link(__('Manage users'), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-        <li class="icon lock"><?php echo $this->Html->link(__('Manage rules'), array('controller'=> 'rules', 'action'=>'index')); ?> </li>
-	</ul>
-</div>
-<?php } ?>
 </div>

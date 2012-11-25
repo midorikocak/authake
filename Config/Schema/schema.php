@@ -32,7 +32,7 @@ class AuthakeSchema extends CakeSchema {
 		'group_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'order' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'action' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 512, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'permission' => array('type' => 'text', 'null' => false, 'default' => 'b\'0\'', 'length' => 1),
+		'permission' => array('type' => 'text', 'null' => false, 'length' => 1),
 		'forward' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 64, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'message' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 512, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'indexes' => array(

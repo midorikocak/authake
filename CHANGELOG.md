@@ -1,3 +1,7 @@
+v2.3.1 (Mar 25, 2012) Mutlu Tevfik Kocak
+    * Settings are working
+    * Schema is deleted due to faults
+
 v2.2.3 (Nov 6, 2012) Mutlu Tevfik Kocak
 	* Gravatar support
 	* All new look & feel

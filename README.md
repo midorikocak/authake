@@ -45,9 +45,7 @@ Install
 
 3. You can create schema from plugin using command to console terminal when you are in your app folder: 
 
-        Console/cake schema create -plugin Authake
-
-    Or Alternatively you can add the Authake/db/authake_clean.sql to your database.
+    Do not use any schema to generate SQL. Causes redirection loop instead of it add the Authake/db/authake_clean.sql to your database.
 
 4. Add this to your config/database.php to make authake work.
 
@@ -87,3 +85,6 @@ Install
 6. Use username: **admin** password: **admin** to login
 
     For any question mtkocak@gmail.com
+    
+7. Change the permissions of Config folder to 777 and recurse into enclosed items
+    Chmod 777

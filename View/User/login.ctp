@@ -1,17 +1,31 @@
-<div id="authake">
-<?php echo $this->element('gotohomepage'); ?>
-<div class="login form">
-<?php echo $this->Form->create(null, array('url' => array('controller' => 'user', 'action'=>'login')));?> 
-<fieldset>
-    <?php
-        echo $this->Form->input('login', array('label'=>__('Login'), 'size'=>'14'));
-        echo $this->Form->input('password', array('label'=>__('Password'), 'value' => '', 'size'=>'14'));
-    ?>
-</fieldset>
-<?php echo $this->Form->end(__('Login'))  ?>
-<?php if(Configure::read('Authake.registration') == true){?>
-    <p class="lostpassword" style="margin-left: 16em;"><?php echo $this->Html->link(__("I forgot my password..."), array('action'=>'lost_password'))."<br/>"; ?></p>
-    <p class="register" style="margin-left: 16em;"><?php echo $this->Html->link(__("Register yourself"), array('action'=>'register'))."<br/>"; ?></p>
-<?php };?>
-</div>
+<div id="content">
+	<div class="container">
+		<div class="section span6 offset3">
+			<div class="row-fluid">
+				<?php echo $this->Form->create(null, array('url' => array('controller' => 'user', 'action'=>'login')));?>
+				<div class="section-header">
+					<h3><?php  echo __('Login'); ?></h3>
+					<div class="section-actions">
+						<?php if(Configure::read('Authake.registration') == true){?>
+						<?php echo $this->Html->link(__("I forgot my password..."), array('action'=>'lost_password'),array('class'=>'btn btn-mini')); ?>
+						 <?php echo $this->Html->link(__("Sign In"), array('action'=>'register'), array('class'=>'btn btn-success btn-mini'))?>
+						<?php };?>
+					</div>
+				</div>
+				<div class="section-body">
+					<?php 
+					echo $this->Form->input('login', array('label'=>'Login', 'size'=>'14'));
+					echo $this->Form->input('password', array('label'=>'Password', 'value' => '', 'size'=>'14'));
+					?>
+				</div>
+				<div class="section-footer">
+					<div class="control-group">
+						<div class="form-actions">
+						<?php echo $this->Form->end(array('div'=>false,'label'=>'Login','class'=>'action input-action btn btn-info'));?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -169,97 +169,98 @@ class UserController extends AuthakeAppController {
 		}
 	}
 
-	/**
-	* User registration
-	*/
-	function register() {
-		if (Configure::read('Authake.registration') == false)
-		{
-			$this->redirect('/');
-		}
+    /**
+    * User registration
+    */
+    function register() {
+        if (Configure::read('Authake.registration') == false)
+        {
+            $this->redirect('/');
+        }
 
-		if (!empty($this->request->data))
-		{
-			$this->User->recursive = 0;/* If settings say we should use only email info instead of username/email, skip this */
-			if (Configure::read('Authake.useEmailAsUsername') == false)
-			{
-				$exist = $this->User->findByLogin($this->request->data['User']['login']);
+        if (!empty($this->request->data))
+        {
+            $this->User->recursive = 0;/* If settings say we should use only email info instead of username/email, skip this */
+            if (Configure::read('Authake.useEmailAsUsername') == false)
+            {
+                $exist = $this->User->findByLogin($this->request->data['User']['login']);
 
-				if (!empty($exist))
-				{
-					$this->Session->setFlash(__('This login is already used!'), 'error', array('plugin' => 'Authake'));
-					return;
-				}
+                if (!empty($exist))
+                {
+                    $this->Session->setFlash(__('This login is already used!'), 'error', array('plugin' => 'Authake'));
+                    return;
+                }
+            }
+            else
+            {
+                $exist = $this->User->findByEmail($this->request->data['User']['email']);
 
-				$exist = $this->User->findByEmail($this->request->data['User']['email']);
+                if (!empty($exist))
+                {
+                    $this->Session->setFlash(__('This email is already registred!'), 'error', array('plugin' => 'Authake'));
+                    return;
+                }
+            }
+            $pwd = $this->__makePassword($this->request->data['User']['password1'], $this->request->data['User']['password2']);
 
-				if (!empty($exist))
-				{
-					$this->Session->setFlash(__('This email is already registred!'), 'error', array('plugin' => 'Authake'));
-					return;
-				}
+            if (!$pwd)
+            {
+                return;
+            }
 
-				$pwd = $this->__makePassword($this->request->data['User']['password1'], $this->request->data['User']['password2']);
+            // password is invalid...
+            $this->request->data['User']['password'] = $pwd;
+            $this->request->data['User']['emailcheckcode'] = md5(time()*rand());
+            $this->User->create();//add default group if there is such thing
 
-				if (!$pwd)
-				{
-					return;
-				}
+            if (Configure::read('Authake.defaultGroup') != null && Configure::read('Authake.defaultGroup') != false)
+            {
+                $groups = $this->Group->find('all', array('fields'=>array('Group.id'), 'conditions'=>array('Group.id'=>Configure::read('Authake.defaultGroup'))));
 
-				// password is invalid...
-				$this->request->data['User']['password'] = $pwd;
-				$this->request->data['User']['emailcheckcode'] = md5(time()*rand());
-				$this->User->create();//add default group if there is such thing
+                foreach ($groups as $group)
+                {
+                    $this->request->data['Group']['Group'][] = $group['Group']['id'];
+                }
+            }
 
-				if (Configure::read('Authake.defaultGroup') != null && Configure::read('Authake.defaultGroup') != false)
-				{
-					$groups = $this->Group->find('all', array('fields'=>array('Group.id'), 'conditions'=>array('Group.id'=>Configure::read('Authake.defaultGroup'))));
+            //
 
-					foreach ($groups as $group)
-					{
-						$this->request->data['Group']['Group'][] = $group['Group']['id'];
-					}
-				}
+            if ($this->User->save($this->request->data))
+            {// send a mail to finish the registration
+                $email = new CakeEmail();
+                $email->to($this->request->data['User']['email']);
+                $email->subject(sprintf(__('Your registration confirmation at %s '), Configure::read('Authake.service')));
+                $email->viewVars(array('service' => Configure::read('Authake.service'), 'code'=> $this->request->data['User']['emailcheckcode']));
+                $email->replyTo(Configure::read('Authake.systemReplyTo'));
+                $email->from(Configure::read('Authake.systemEmail'));
+                $email->emailFormat('html');//$this->Email->charset = 'utf-8';
+                $email->template('Authake.register');//Set the code into template
+                //$this->set('code', $this->request->data['User']['emailcheckcode']);
+                //$this->set('service', Configure::read('Authake.service'));
 
-				//
-
-				if ($this->User->save($this->request->data))
-				{// send a mail to finish the registration
-					$email = new CakeEmail();
-					$email->to($this->request->data['User']['email']);
-					$email->subject(sprintf(__('Your registration confirmation at %s '), Configure::read('Authake.service')));
-					$email->viewVars(array('service' => Configure::read('Authake.service'), 'code'=> $this->request->data['User']['emailcheckcode']));
-					$email->replyTo(Configure::read('Authake.systemReplyTo'));
-					$email->from(Configure::read('Authake.systemEmail'));
-					$email->emailFormat('html');//$this->Email->charset = 'utf-8';
-					$email->template('Authake.register');//Set the code into template
-					//$this->set('code', $this->request->data['User']['emailcheckcode']);
-					//$this->set('service', Configure::read('Authake.service'));
-
-					if ($email->send())
-					{
-						$this->Session->setFlash(__('You will receive an email with a code in order to finish the registration...'), 'info', array('plugin' => 'Authake'));
-					}
-					else
-					{
-						$this->Session->setFlash(sprintf(__('Failed to send the confirmation email. Please contact the administrator at %s'), Configure::read('Authake.systemReplyTo')), 'error', array('plugin' => 'Authake'));
-					}
-					if(!isset($this->request->data['Requester']))
-					{
-					$this->redirect(array('plugin'=>'authake', 'controller'=>'user', 'action'=>'login'));
-					}
-					else
-					{
-						return $this->User->id;
-					}
-				}
-				else
-				{
-					$this->Session->setFlash(__('The registration failed!'), 'error', array('plugin' => 'Authake'));
-				}
-			}
-		}
-	}
+                if ($email->send())
+                {
+                    $this->Session->setFlash(__('You will receive an email with a code in order to finish the registration...'), 'info', array('plugin' => 'Authake'));
+                }
+                else
+                {
+                    $this->Session->setFlash(sprintf(__('Failed to send the confirmation email. Please contact the administrator at %s'), Configure::read('Authake.systemReplyTo')), 'error', array('plugin' => 'Authake'));
+                }
+                if(!isset($this->request->data['Requester']))
+                {
+                    $this->redirect(array('plugin'=>'authake', 'controller'=>'user', 'action'=>'login'));
+                }
+                else
+                {
+                    return $this->User->id;
+                }
+            }
+            else
+            {
+                $this->Session->setFlash(__('The registration failed!'), 'error', array('plugin' => 'Authake'));
+            }
+        }
+    }
 
 	/**
 	* Function which allow user to change his password if he request it

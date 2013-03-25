@@ -39,9 +39,12 @@ class AuthakeController extends AuthakeAppController {
 	function settings(){
 		if (!empty($this->request->data['Settings']))
 		{
+		    $this->request->data['Settings']['loginAction'] = Router::parse($this->request->data['Settings']['loginAction']);
+		    $this->request->data['Settings']['defaultDeniedAction'] = Router::parse($this->request->data['Settings']['defaultDeniedAction']);
 			Configure::write('Authake',$this->request->data['Settings']);
 		}
 	$configs = Configure::read('Authake');
+	Configure::dump('authake_config.php', 'Authake', array('Authake'));
 	$this->set(compact('configs'));// fix permissions dropdown menu
 	}
 	
@@ -60,6 +63,7 @@ class AuthakeController extends AuthakeAppController {
 	            Configure::write('Authake.defaultGroup', 2); //could be array or single number
 	            Configure::write('Authake.useDefaultLayout', false); //could be true or false
 	            Configure::write('Authake.useEmailAsUsername', false); //could be true or false
+	            Configure::dump('authake_config.php', 'Authake', array('Authake'));
 				$this->Session->setFlash(__('Authake Reset'), 'success');
 				$this->redirect(array('action'=>'index'));
 			}

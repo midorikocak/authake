@@ -4,7 +4,7 @@
   This file is part of Authake.
 
   Author: Jérôme Combaz (jakecake/velay.greta.fr)
-  Contributors: Mutlu Tevfik Kocak Since too long time, Do not forget Nick Chankov nchankov
+  Contributors:
 
   Authake is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,6 +35,10 @@ class AuthakeComponent extends Component {
     }
 
     function startup(Controller $controller = null) {
+        App::uses('PhpReader', 'Configure');
+        Configure::config('Authake', new PhpReader(APP.'/Plugin/Authake/Config/'));
+        
+        Configure::load('authake_config.php', 'Authake');
         /**
          * AUTHAKE CONFIGURATION
          * All these changes can be overrided in AppController->beforeFilter action
@@ -125,6 +129,7 @@ class AuthakeComponent extends Component {
         if (Configure::read('Authake.useEmailAsUsername') == null) {
             Configure::write('Authake.useEmailAsUsername', false); //could be true or false
         }
+        //Configure::dump('authake_config.php', 'Authake', array('Authake'));
     }
 
     function beforeFilter(&$controller) { //pr($this);
@@ -134,10 +139,14 @@ class AuthakeComponent extends Component {
         // get action path
 
         $path = $controller->request->params;
-
+        
         $loginAction = Configure::read('Authake.loginAction');
         
-       if (Router::url($controller->request->params + array("base" => false)) != Router::url($loginAction + array("base" => false)) ) {
+        if(!is_array($loginAction))
+        {
+            $loginAction = Router::parse($loginAction); 
+        }
+        if (Router::url($controller->request->params + array("base" => false)) != Router::url($loginAction + array("base" => false)) ) {
         
             $this->setPreviousUrl(null);
         }

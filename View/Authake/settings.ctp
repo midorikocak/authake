@@ -22,7 +22,7 @@ $this->Html->addCrumb('Authake Settings', $this->Html->url( null, true )); ?>
 							<?php echo $this->Form->input('service', array('value'=>$configs['service'],'type'=>'text','label'=>array('text'=>__('Service'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Name of the service i.e. "Super Authake"</span></div>'));?>
 						</div>
 						<div class="string control-group stringish" id="loginAction">
-							<?php echo $this->Form->input('loginAction', array('value'=>$configs['loginAction'],'type'=>'text','label'=>array('text'=>__('Login Action'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Default login action</span></div>'));?>
+							<?php echo $this->Form->input('loginAction', array('value'=>Router::url($configs['loginAction']+ array("base" => false)),'type'=>'text','label'=>array('text'=>__('Login Action'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Default login action</span></div>'));?>
 						</div>
 						<div class="string control-group stringish" id="loggedAction">
 							<?php echo $this->Form->input('loggedAction', array('value'=>$configs['loggedAction'],'type'=>'text','label'=>array('text'=>__('Logged Action'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Used to redirect the users if the current user is logged out. Basically, this is used in case when The login page is the home page. If this is not set to different location, then it\'s going into recursion.</span></div>'));?>
@@ -31,7 +31,7 @@ $this->Html->addCrumb('Authake Settings', $this->Html->url( null, true )); ?>
 							<?php echo $this->Form->input('sessionTimeout', array('value'=>$configs['sessionTimeout'],'type'=>'number','label'=>array('text'=>__('Session Timeout'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Session timeout in seconds, if managed by Authake (or null to disable)</span></div>'));?>
 						</div>
 						<div class="string control-group stringish" id="defaultDeniedAction">
-							<?php echo $this->Form->input('defaultDeniedAction', array('value'=>$configs['defaultDeniedAction'],'type'=>'text','label'=>array('text'=>__('Default Denied Action'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Default page when access is denied (should be allowed by ACLs...)</span></div>'));?>
+							<?php echo $this->Form->input('defaultDeniedAction', array('value'=>Router::url($configs['defaultDeniedAction']+ array("base" => false)),'type'=>'text','label'=>array('text'=>__('Default Denied Action'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Default page when access is denied (should be allowed by ACLs...)</span></div>'));?>
 						</div>
 						<div class="string control-group stringish" id="rulesCacheTimeout">
 							<?php echo $this->Form->input('rulesCacheTimeout', array('value'=>$configs['rulesCacheTimeout'],'type'=>'number','label'=>array('text'=>__('Rules Cache Timeout'),'class'=>'control-label'),'between'=>'<div class="controls">', 'after'=>'<span class="help-inline">Reload all rules every x seconds</span></div>'));?>

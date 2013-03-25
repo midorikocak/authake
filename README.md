@@ -22,7 +22,6 @@ Further changes are here for your contribution:
 
 - sha1 security
 - long id's
-- settings save issue
 - For questions and issues: Mutlu Tevfik Kocak mtkocak(at) gmail.com
 
 Downlad

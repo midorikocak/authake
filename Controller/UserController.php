@@ -77,7 +77,7 @@ class UserController extends AuthakeAppController {
 				$user['User']['email'] = $this->request->data['User']['email'];// send a mail with code to change the pw
 				$email = new CakeEmail();
 				$email->to($user['User']['email']);
-				$email->subject(sprintf(__('Your e-mail change request at %s '), Configure::read('Authake.service', 'Authentication')));
+				$email->subject(sprintf(__('Your e-mail change request at %s '), Configure::read('Authake.service')));
 				$email->replyTo(Configure::read('Authake.systemReplyTo'));
 				$email->from(Configure::read('Authake.systemEmail'));
 				$email->emailFormat('html');//$this->Email->charset = 'utf-8';
@@ -227,7 +227,7 @@ class UserController extends AuthakeAppController {
 				{// send a mail to finish the registration
 					$email = new CakeEmail();
 					$email->to($this->request->data['User']['email']);
-					$email->subject(sprintf(__('Your registration confirmation at %s '), Configure::read('Authake.service', 'Authentication')));
+					$email->subject(sprintf(__('Your registration confirmation at %s '), Configure::read('Authake.service')));
 					$email->viewVars(array('service' => Configure::read('Authake.service'), 'code'=> $this->request->data['User']['emailcheckcode']));
 					$email->replyTo(Configure::read('Authake.systemReplyTo'));
 					$email->from(Configure::read('Authake.systemEmail'));
@@ -488,7 +488,7 @@ class UserController extends AuthakeAppController {
 				if ($this->User->save($user))
 				{// send a mail with code to change the pw
 					$this->Email->to = $user['User']['email'];
-					$this->Email->subject = sprintf(__('Your password change request at %s '), Configure::read('Authake.service', 'Authentication'));
+					$this->Email->subject = sprintf(__('Your password change request at %s '), Configure::read('Authake.service'));
 					$this->Email->replyTo = Configure::read('Authake.systemReplyTo');
 					$this->Email->from = Configure::read('Authake.systemEmail');
 					$this->Email->sendAs = 'html';

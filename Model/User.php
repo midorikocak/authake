@@ -25,14 +25,57 @@ class User extends AuthakeAppModel {
 	var $useDbConfig = 'authake';
 	var $recursive = 1;
 	var $hasAndBelongsToMany = array('Group' => array('className' => 'Authake.Group', 'joinTable' => 'authake_groups_users', 'foreignKey' => 'user_id', 'associationForeignKey' => 'group_id', 'conditions' => '', 'fields' => '', 'order' => '', 'limit' => '', 'offset' => '', 'finderQuery' => '', 'deleteQuery' => '', 'insertQuery' => ''));
-	function beforeValidate()
-	{
-		$this->validate = array('login' => array('alphanumeric' => array('rule' => 'alphaNumeric', 'message' => 'Only alphabets and numbers allowed'), 'minlength' => array('rule' => array('minLength', ( Configure::read('Authake.useEmailAsUsername') ? '0' : '3' ) ),// set min length to 0 if we do not want usernames but only emails
-		'message' => 'Minimum length of 3 characters'), 'maxlength' => array('rule' => array('maxLength', '32'), 'message' => 'Maximum length of 32 characters')), 'email' => array('notEmpty' => array('rule' => 'notEmpty', 'message'=>__('Username can not be blank')), 'unique' => array('rule' => 'isUnique', 'message'=>__('This e-mail has already been used'), 'on'=>'create'),/*'emailAddress' => array(
-		'rule' => array('email', true),
-		'message' => __('Please supply a valid email address')
-		)*/
-), 'password1' => array('checkEmpty' => array('rule' => array('notEmpty'), 'message' => __('Passwords must be equal and not empty'), 'on' => 'create')), 'password2' => array('checkInsertPass' => array('rule' => array('notEmpty'), 'message' => __('Passwords must be equal and not empty'), 'on' => 'create')));
+function beforeValidate(){
+    $validateOptions = array();
+    if(!Configure::read('Authake.useEmailAsUsername'))
+    {
+        $loginOptions = array('login' => array(
+            'alphanumeric' => array(
+                'rule' => 'alphaNumeric', 
+                'message' => 'Only alphabets and numbers allowed'
+            ), 
+            'minlength' => array(
+                'rule' => array('minLength', ( Configure::read('Authake.useEmailAsUsername') ? '0' : '3' )),
+                /* set min length to 0 if we do not want usernames but only emails*/
+                'message' => 'Minimum length of 3 characters'
+            ), 
+            'maxlength' => array(
+                'rule' => array('maxLength', '32'), 
+                'message' => 'Maximum length of 32 characters'
+            ),
+        ));
+        $validateOptions = $loginOptions;
+    }
+    $otherOptions = array(
+        'email' => array(
+            'notEmpty' => array(
+                'rule' => 'notEmpty', 
+                'message'=>__('Username can not be blank')
+            ), 
+            'unique' => array(
+                'rule' => 'isUnique',
+                'message'=>__('This e-mail has already been used'), 
+                'on'=>'create'
+            ),
+            /*'emailAddress' => array('rule' => array('email', true),'message' => __('Please supply a valid email address'))*/
+        ), 
+        'password1' => array(
+            'checkEmpty' => array(
+            'rule' => array('notEmpty'), 
+            'message' => __('Passwords must be equal and not empty'),
+            'on' => 'create'
+                )
+        ), 
+        'password2' => array(
+            'checkInsertPass' => array(
+                'rule' => array('notEmpty'), 
+                'message' => __('Passwords must be equal and not empty'),
+                'on' => 'create'
+            )
+        )
+    );
+    $validateOptions += $otherOptions;
+    $this->validate = $validateOptions;
 }
 
 function checkPasswords()

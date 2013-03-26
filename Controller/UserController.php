@@ -21,7 +21,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 App::uses('CakeEmail', 'Network/Email');
 class UserController extends AuthakeAppController {
 	var $uses = array('Authake.User', 'Authake.Rule', 'Authake.Group');
-	var $components = array('Email');//var $layout = 'authake';
+	//var $components = array('Email');//var $layout = 'authake';
 
 	//var $scaffold;
 	function denied(){// display this view (/app/views/users/denied.ctp) when the user is denied

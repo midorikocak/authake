@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `authake_rules` (
   `group_id` int(10) unsigned DEFAULT NULL,
   `order` int(10) unsigned DEFAULT NULL,
   `action` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `permission` bit(1) NOT NULL DEFAULT b'0',
+  `permission` tinyint(1) NOT NULL DEFAULT '0',
   `forward` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `message` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)

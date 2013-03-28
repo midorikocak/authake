@@ -3,8 +3,8 @@ $config = array (
   'Authake' => 
   array (
     'useDefaultLayout' => '1',
-    'baseUrl' => 'http://sdje.sdje.stiftung.denkmal/',
-    'service' => 'SDJE',
+    'baseUrl' => 'http://showcase.dev/aktifshemale/',
+    'service' => 'Authake',
     'loginAction' => 
     array (
       'plugin' => 'authake',
@@ -17,7 +17,7 @@ $config = array (
       array (
       ),
     ),
-    'loggedAction' => 'http://sdje.sdje.stiftung.denkmal/',
+    'loggedAction' => 'http://showcase.dev/aktifshemale/',
     'sessionTimeout' => '604800',
     'defaultDeniedAction' => 
     array (

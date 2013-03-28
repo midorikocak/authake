@@ -3,8 +3,8 @@ $config = array (
   'Authake' => 
   array (
     'useDefaultLayout' => '1',
-    'baseUrl' => 'http://showcase.dev/aktifshemale/',
-    'service' => 'Authake',
+    'baseUrl' => 'http://sdje.sdje.stiftung.denkmal/',
+    'service' => 'SDJE',
     'loginAction' => 
     array (
       'plugin' => 'authake',
@@ -17,7 +17,7 @@ $config = array (
       array (
       ),
     ),
-    'loggedAction' => 'http://showcase.dev/aktifshemale/',
+    'loggedAction' => 'http://sdje.sdje.stiftung.denkmal/',
     'sessionTimeout' => '604800',
     'defaultDeniedAction' => 
     array (
@@ -37,6 +37,6 @@ $config = array (
     'passwordVerify' => '1',
     'registration' => '1',
     'defaultGroup' => '2',
-    'useEmailAsUsername' => '1',
+    'useEmailAsUsername' => '0',
   ),
 );

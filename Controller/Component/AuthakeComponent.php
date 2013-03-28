@@ -36,7 +36,8 @@ class AuthakeComponent extends Component {
 
     function startup(Controller $controller = null) {
         App::uses('PhpReader', 'Configure');
-        Configure::config('Authake', new PhpReader(APP.'/Plugin/Authake/Config/'));
+        //Configure::config('Authake', new PhpReader(APP.'/Plugin/Authake/Config/'));
+	Configure::config('Authake', new PhpReader(App::pluginPath('Authake').'Config/'));
         
         Configure::load('authake_config.php', 'Authake');
         /**

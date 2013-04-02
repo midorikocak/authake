@@ -25,7 +25,7 @@ class User extends AuthakeAppModel {
 	var $useDbConfig = 'authake';
 	var $recursive = 1;
 	var $hasAndBelongsToMany = array('Group' => array('className' => 'Authake.Group', 'joinTable' => 'authake_groups_users', 'foreignKey' => 'user_id', 'associationForeignKey' => 'group_id', 'conditions' => '', 'fields' => '', 'order' => '', 'limit' => '', 'offset' => '', 'finderQuery' => '', 'deleteQuery' => '', 'insertQuery' => ''));
-function beforeValidate(){
+function beforeValidate($options = array()){
     $validateOptions = array();
     if(!Configure::read('Authake.useEmailAsUsername'))
     {

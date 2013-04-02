@@ -22,8 +22,12 @@
 			<div class="section-body">
 				<div class="well well-small">
 					<div class="row-fluid">
-						<div class="span6">
-							&nbsp;
+						<div class="span6 pagination">
+						    <ul>
+							<?php echo $this->Paginator->prev('<<', array('tag' => 'li', 'disabledTag' => 'span'), null, array());?>
+							<?php echo $this->Paginator->numbers(array('tag' => 'li', 'separator' => '', 'currentTag' => 'span', 'first' => 2, 'last' => 2, 'modulus' => 20, 'ellipsis' => '<li><span>...</span></li>'));?>
+							<?php echo $this->Paginator->next('>>', array('tag' => 'li', 'disabledTag' => 'span'), null, array());?>
+						    </ul>
 						</div>
 							<?php
 						echo $this->Paginator->counter(array(

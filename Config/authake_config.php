@@ -3,7 +3,7 @@ $config = array (
   'Authake' => 
   array (
     'useDefaultLayout' => '1',
-    'baseUrl' => 'http://showcase.dev/aktifshemale/',
+    'baseUrl' => '/',
     'service' => 'Authake',
     'loginAction' => 
     array (
@@ -17,7 +17,7 @@ $config = array (
       array (
       ),
     ),
-    'loggedAction' => 'http://showcase.dev/aktifshemale/',
+    'loggedAction' => '/',
     'sessionTimeout' => '604800',
     'defaultDeniedAction' => 
     array (

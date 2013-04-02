@@ -37,6 +37,6 @@ $config = array (
     'passwordVerify' => '1',
     'registration' => '1',
     'defaultGroup' => '2',
-    'useEmailAsUsername' => '1',
+    'useEmailAsUsername' => '0',
   ),
 );

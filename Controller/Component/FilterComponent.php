@@ -31,7 +31,7 @@ class FilterComponent extends Component {
         * @param object $controller the class of the controller which call this component
         * @access public
         */
-        function initialize($controller) { }
+        function initialize(Controller $controller) { }
         function __construct(ComponentCollection $collection, $settings = array()) {
             parent::__construct($collection, $settings);
         }
@@ -68,7 +68,7 @@ class FilterComponent extends Component {
         /**
         * function which will take care of the storing the filter data and loading after this from the Session
         */
-        function _prepareFilter(&$controller){
+        function _prepareFilter(Controller $controller){
             if(isset($controller->data)){
                 foreach($controller->data as $model=>$fields){
                     foreach($fields as $key=>$field){

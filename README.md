@@ -87,3 +87,11 @@ Install
     
 7. Change the permissions of Config folder to 777 and recurse into enclosed items
     Chmod 777
+
+8. Your login page is located at http://localhost/auth/authake/user/login if you want to login from http://localhost/auth/login you have to create a route at app/config/routes.php like this:
+
+        Router::connect('/login', array('plugin'=>'authake','controller' => 'user', 'action' => 'login'));
+
+    Before the line that contains:
+
+        require CAKE . 'Config' . DS . 'routes.php';

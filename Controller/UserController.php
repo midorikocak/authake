@@ -317,19 +317,21 @@ class UserController extends AuthakeAppController {
 		if(!isset($this->Authake))
 		{
 			$this->Authake = $Authake;
-			if ($this->Authake->isLogged())
+		}
+		
+		if ($this->Authake->isLogged())
+		{
+			if(!isset($this->request->data['requester']))
 			{
-				if(!isset($this->request->data['requester']))
-				{
-				$this->Session->setFlash(__('You are already logged in!'), 'info', array('plugin' => 'Authake'));
-				$this->redirect(Configure::read('Authake.loggedAction'));
-				}
-				else
-				{
-					return __('You are already logged in!');
-				}
+			$this->Session->setFlash(__('You are already logged in!'), 'info', array('plugin' => 'Authake'));
+			$this->redirect(Configure::read('Authake.loggedAction'));
+			}
+			else
+			{
+				return __('You are already logged in!');
 			}
 		}
+		
 
 		if (!empty($this->request->data) )
 		{

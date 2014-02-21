@@ -20,7 +20,7 @@
 */
 class UsersController extends AuthakeAppController {
 	var $uses = array('Authake.User', 'Authake.Rule');
-	var $components = array('Authake.Filter');// var $layout = 'authake';
+	var $components = array('Authake.Filter','Session');// var $layout = 'authake';
 	var $paginate = array('limit' => 10, 'order' => array('User.login' => 'asc'));//var $scaffold;
 	
 	function index($tableonly = false) {

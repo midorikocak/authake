@@ -191,7 +191,7 @@ class AuthakeComponent extends Component {
     }
 
     function getPreviousUrl() {
-        return $this->Session->read('Authake.previousUrl');
+        return Router::reverse($this->Session->read('Authake.previousUrl'));
     }
 
     function isLogged() {
